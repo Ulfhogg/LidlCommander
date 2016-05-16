@@ -1,0 +1,2 @@
+# LidlCommander
+basic script tool
