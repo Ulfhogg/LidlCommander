@@ -1,5 +1,5 @@
 @ECHO off
-SET interactive=0
+SET interactive=0 
 COLOR 1E
 
 :: LidlCommander tool for Spanish Team 
