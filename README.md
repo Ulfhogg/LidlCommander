@@ -1,5 +1,5 @@
 @ECHO off
-SET interactive=0 
+SET interactive=0
 COLOR 1E
 
 :: LidlCommander tool for Spanish Team 
@@ -21,6 +21,7 @@ ECHO  4) Reinciar aplicacion de BO [NOT WORKING]
 ECHO  5) Ping
 ECHO  6) Reinciar servicio CA SupportBridge
 ECHO  7) Reinstalar servicio C3
+::ECHO  8) Borrar archivelog expirados (STABLENET)
 ECHO  0) Salir
 ECHO.
 ECHO ++==================================++
@@ -36,6 +37,7 @@ IF "%var%"=="4"  GOTO op4
 IF "%var%"=="5"  GOTO op5
 IF "%var%"=="6"  GOTO op6
 IF "%var%"=="7"  GOTO op7
+::IF "%var%"=="8"  GOTO op8
 IF "%var%"=="0"  GOTO salir
 ECHO.
 
@@ -58,8 +60,9 @@ SET /P till=Escriba el numero de caja con 2 digitos:
 
 psshutdown \\es-"%store%"TI"%till%" -r -t 1
 
-PAUSE
+ECHO Caja reiniciadose.
 ECHO.
+PAUSE
 GOTO start
 
 :: exception handling when out of option range
@@ -78,13 +81,17 @@ ECHO +++= (2) Reiniciar aplicacion de caja =+++
 SET /P store=Escriba el numero de tienda con 4 digitos:
 ECHO.
 SET /P till=Escriba el numero de caja con 2 digitos:
+ECHO.
 
 pskill \\es-"%store%"TI"%till%" cmd.exe -u wepos -p LIdL123! -t
-PAUSE
-psexec \\es-"%store%"TI"%till%"  -i -d   c:\gkretail\pos\jstore_ES.cmd -u wepos -p LIdL123! 
-
-PAUSE
+ECHO Aplicacion de caja parada.
 ECHO.
+PAUSE
+
+psexec \\es-"%store%"TI"%till%"  -i -d   c:\gkretail\pos\jstore_ES.cmd -u wepos -p LIdL123! 
+ECHO Aplicacion de caja reinciada.
+ECHO.
+PAUSE
 GOTO start
 
 :: exception handling when out of option range
@@ -138,16 +145,20 @@ GOTO op3
 	:del
 	DEL \\es-"%store%"ti"%till%"\c$\gkretail\pos\nullgk_bon
 	ECHO Fichero borrado.
+	ECHO.
 	PAUSE
+	
 	pskill \\es-"%store%"TI"%till%" cmd.exe -u wepos -p LIdL123! -t
+	ECHO Aplicacion de caja parada.
+	ECHO.
 	PAUSE
+	
 	psexec \\es-"%store%"TI"%till%"  -i -d   c:\gkretail\pos\jstore_ES.cmd -u wepos -p LIdL123!
-	
-	
 	ECHO.
 	ECHO Archivo nullgk_bon BORRADO y aplicacion de caja reiniciada!!
 	ECHO Volvemos a menu principal.
 	ECHO.
+	
 	PAUSE
 	GOTO start
 
@@ -230,7 +241,10 @@ ECHO.
 	SET /P n=Escriba el numero de repeticiones del ping:
 	ECHO.
 	
-	ping es-"%store%"vpn01 -t
+	ping es-"%store%"vpn01 -n "%n%"
+	
+	PAUSE
+	GOTO start
 
 	:: exception when out of option range
 	ECHO.
@@ -248,9 +262,12 @@ ECHO.
 	ECHO.
 	SET /P ap=Escriba el numero de punto de acceso con 2 digitos:
 	ECHO.
+	SET /P n=Escriba el numero de repeticiones del ping:
+	ECHO.
 	
-	ping es-"%store%"wn"%ap%" -t
+	ping es-"%store%"wn"%ap%" -n "%n%"
 	
+	PAUSE
 	GOTO start
 	
 	:: exception when out of option range
@@ -266,10 +283,16 @@ ECHO.
 	ECHO += (5.4) Ping Caja =+
 	ECHO.
 	SET /P store=Escriba el numero de tienda con 4 digitos:
+	ECHO.
 	SET /P till=Escriba el numero de la caja con 2 digitos:
 	ECHO.
+	SET /P n=Escriba el numero de repeticiones del ping:
+	ECHO.
 	
-	ping es-"%store%"TI"%till%" -t
+	ping es-"%store%"TI"%till%" -n "%n%"
+	
+	PAUSE
+	GOTO start
 	
 	:: exception when out of option range
 	ECHO.
@@ -285,9 +308,13 @@ ECHO.
 	ECHO.
 	SET /P store=Escriba el numero de tienda con 4 digitos:
 	ECHO.
+	SET /P n=Escriba el numero de repeticiones del ping:
+	ECHO.
 	
 	ping es-"%store%"bo01 -t
 	
+	PAUSE
+	GOTO start
 		
 	:: exception when out of option range
 	ECHO.
@@ -307,8 +334,13 @@ ECHO.
 	ECHO.
 	SET /P store=Escriba el numero de tienda con 4 digitos:
 	ECHO.
+	SET /P n=Escriba el numero de repeticiones del ping:
+	ECHO.
 	
-	ping es-%store%np01 -t
+	ping es-%store%np01 -n "%n%"
+	
+	PAUSE
+	GOTO start
 
 	:: exception when out of option range
 	ECHO.
@@ -363,6 +395,24 @@ ECHO.
 PAUSE
 ECHO.
 GOTO op7
+
+
+:: function 8 delete expired archivelog STABLENET drive E
+::op8
+::ECHO.
+::ECHO +++= (8) Borrar archivelog expirados (STABLENET) =+++
+::ECHO.
+::ECHO 
+::rman target /
+
+::crosscheck archivelog all;
+
+::delete expired archivelog all;
+::PAUSE
+::ECHO DONE
+::PAUSE
+
+::GOTO start
 
 :: exit 
 @cls&exit
