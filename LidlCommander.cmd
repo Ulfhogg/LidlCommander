@@ -21,7 +21,6 @@ ECHO  4) Reinciar aplicacion de BO [NOT WORKING]
 ECHO  5) Ping
 ECHO  6) Reinciar servicio CA SupportBridge
 ECHO  7) Reinstalar servicio C3
-::ECHO  8) Borrar archivelog expirados (STABLENET)
 ECHO  0) Salir
 ECHO.
 ECHO ++==================================++
@@ -37,7 +36,6 @@ IF "%var%"=="4"  GOTO op4
 IF "%var%"=="5"  GOTO op5
 IF "%var%"=="6"  GOTO op6
 IF "%var%"=="7"  GOTO op7
-::IF "%var%"=="8"  GOTO op8
 IF "%var%"=="0"  GOTO salir
 ECHO.
 
@@ -88,8 +86,9 @@ ECHO Aplicacion de caja parada.
 ECHO.
 PAUSE
 
-psexec \\es-"%store%"TI"%till%"  -i -d   c:\gkretail\pos\jstore_ES.cmd -u wepos -p LIdL123! 
+psexec \\es-"%store%"TI"%till%" -u wepos -p LIdL123! -i -d c:\gkretail\pos\jstore_ES.cmd 
 ECHO Aplicacion de caja reinciada.
+ECHO Volvemos a menu principal.
 ECHO.
 PAUSE
 GOTO start
@@ -135,7 +134,7 @@ GOTO op3
 	:: function nullgk_bon, press 1 then go to another label to delete file and restart till application
 	:nullgk_bon
 	ECHO.
-	SET /P siono=Pulse 1 para eliminar o cualquier otra tecla para pasar palabra.
+	SET /P siono=Pulse 1 para eliminar o cualquier tecla para volver a menu princpal.
 	IF "%siono%"=="1" GOTO del (
 	) ELSE (
 	GOTO start
@@ -153,7 +152,7 @@ GOTO op3
 	ECHO.
 	PAUSE
 	
-	psexec \\es-"%store%"TI"%till%"  -i -d   c:\gkretail\pos\jstore_ES.cmd -u wepos -p LIdL123!
+	psexec \\es-"%store%"TI"%till%" -u wepos -p LIdL123! -i -d c:\gkretail\pos\jstore_ES.cmd 
 	ECHO.
 	ECHO Archivo nullgk_bon BORRADO y aplicacion de caja reiniciada!!
 	ECHO Volvemos a menu principal.
@@ -360,6 +359,9 @@ SET /P store=Escriba el numero de la tienda con 4 digitos:
 ECHO.
 
 psservice \\es-"%store%"bo01 restart t-connect
+ECHO.
+ECHO Burbujita en azul vuelve a ser verde, volvemos a menu principal.
+ECHO.
 
 PAUSE
 GOTO start
@@ -384,6 +386,9 @@ SET /P till=Escriba el numero de la caja con 2 digitos:
 ECHO.
 
 psexec \\es-"%store%"TI"%till%" -d C:\gkretail\pos\native\c3_es_net\service_install\c3_service_install.bat
+ECHO.
+ECHO Servicio C3 reinstalado, volvemos a menu principal.
+ECHO.
 
 PAUSE
 GOTO start
@@ -396,23 +401,6 @@ PAUSE
 ECHO.
 GOTO op7
 
-
-:: function 8 delete expired archivelog STABLENET drive E
-::op8
-::ECHO.
-::ECHO +++= (8) Borrar archivelog expirados (STABLENET) =+++
-::ECHO.
-::ECHO 
-::rman target /
-
-::crosscheck archivelog all;
-
-::delete expired archivelog all;
-::PAUSE
-::ECHO DONE
-::PAUSE
-
-::GOTO start
 
 :: exit 
 @cls&exit
