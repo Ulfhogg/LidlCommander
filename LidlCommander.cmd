@@ -59,6 +59,7 @@ SET /P till=Escriba el numero de caja con 2 digitos:
 psshutdown \\es-"%store%"TI"%till%" -r -t 1
 
 ECHO Caja reiniciadose.
+ECHO Volvemos a menu principal.
 ECHO.
 PAUSE
 GOTO start
@@ -82,11 +83,13 @@ SET /P till=Escriba el numero de caja con 2 digitos:
 ECHO.
 
 pskill \\es-"%store%"TI"%till%" cmd.exe -u wepos -p LIdL123! -t
+ECHO.
 ECHO Aplicacion de caja parada.
 ECHO.
 PAUSE
 
 psexec \\es-"%store%"TI"%till%" -u wepos -p LIdL123! -i -d c:\gkretail\pos\jstore_ES.cmd 
+ECHO.
 ECHO Aplicacion de caja reinciada.
 ECHO Volvemos a menu principal.
 ECHO.
