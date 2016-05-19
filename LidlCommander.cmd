@@ -21,7 +21,6 @@ ECHO  4) Reinciar aplicacion de BO [NOT WORKING]
 ECHO  5) Ping
 ECHO  6) Reinciar servicio CA SupportBridge
 ECHO  7) Reinstalar servicio C3
-::ECHO  8) Borrar archivelog expirados (STABLENET)
 ECHO  0) Salir
 ECHO.
 ECHO ++==================================++
@@ -37,7 +36,6 @@ IF "%var%"=="4"  GOTO op4
 IF "%var%"=="5"  GOTO op5
 IF "%var%"=="6"  GOTO op6
 IF "%var%"=="7"  GOTO op7
-::IF "%var%"=="8"  GOTO op8
 IF "%var%"=="0"  GOTO salir
 ECHO.
 
@@ -88,7 +86,7 @@ ECHO Aplicacion de caja parada.
 ECHO.
 PAUSE
 
-psexec \\es-"%store%"TI"%till%"  -i -d   c:\gkretail\pos\jstore_ES.cmd -u wepos -p LIdL123! 
+psexec \\es-"%store%"TI"%till%" -u wepos -p LIdL123! -i -d c:\gkretail\pos\jstore_ES.cmd 
 ECHO Aplicacion de caja reinciada.
 ECHO.
 PAUSE
@@ -153,7 +151,7 @@ GOTO op3
 	ECHO.
 	PAUSE
 	
-	psexec \\es-"%store%"TI"%till%"  -i -d   c:\gkretail\pos\jstore_ES.cmd -u wepos -p LIdL123!
+	psexec \\es-"%store%"TI"%till%" -u wepos -p LIdL123! -i -d c:\gkretail\pos\jstore_ES.cmd 
 	ECHO.
 	ECHO Archivo nullgk_bon BORRADO y aplicacion de caja reiniciada!!
 	ECHO Volvemos a menu principal.
@@ -395,24 +393,6 @@ ECHO.
 PAUSE
 ECHO.
 GOTO op7
-
-
-:: function 8 delete expired archivelog STABLENET drive E
-::op8
-::ECHO.
-::ECHO +++= (8) Borrar archivelog expirados (STABLENET) =+++
-::ECHO.
-::ECHO 
-::rman target /
-
-::crosscheck archivelog all;
-
-::delete expired archivelog all;
-::PAUSE
-::ECHO DONE
-::PAUSE
-
-::GOTO start
 
 :: exit 
 @cls&exit
