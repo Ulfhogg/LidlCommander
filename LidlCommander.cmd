@@ -5,7 +5,7 @@ COLOR 1E
 :: LidlCommander tool for Spanish Team 
 :: Wincor-Nixdorf Poland 2016
 :: Creative Commons - Jaime Villar Camacho
-:: No kasierkas were harmed during execution of this script.
+:: No kasierkas were harmed during the execution of this script.
 :: Version 1.0 
 
 :: menu
