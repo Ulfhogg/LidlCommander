@@ -8,22 +8,33 @@ COLOR 1E
 :: No kasierkas were harmed during the execution of this script.
 :: Version 1.0 
 
+:: set store at beginning of file
+:tienda
+cls
+SET /P store=Por favor escriba el numero de tienda con 4 digitos.
+ECHO.
+ECHO Si quiere cambiar la tienda pulse "c" minuscula en el menu principal.
+GOTO start
+
 :: menu
 :start
 cls
 ECHO ++==[ Bienvenido a LidlCommander ]==++
 ECHO ++ Por favor seleccione una opcion +++
 ECHO.
-ECHO  1) Reinciar caja
-ECHO  2) Reinciar aplicacion de caja
-ECHO  3) Buscar y borrar Nullgk_bon
-ECHO  4) Reinciar aplicacion de BO [NOT WORKING]
-ECHO  5) Ping
-ECHO  6) Reinciar servicio CA SupportBridge
-ECHO  7) Reinstalar servicio C3
-ECHO  0) Salir
+ECHO  1 - Reinciar caja
+ECHO  2 - Reinciar aplicacion de caja
+ECHO  3 - Buscar y borrar Nullgk_bon
+ECHO  4 - Reinciar aplicacion de BO [NOT WORKING]
+ECHO  5 - Ping
+ECHO  6 - Reinciar servicio CA SupportBridge
+ECHO  7 - Reinstalar servicio C3
+ECHO  8 - STABLENET Disco E:/ 
+ECHO  0 - Salir
+ECHO  c - Cambiar de tienda
 ECHO.
 ECHO ++==================================++
+ECHO ++   Estamos en la tienda %store%   ++
 ECHO ++==================================++
 ECHO.
 
@@ -36,6 +47,8 @@ IF "%var%"=="4"  GOTO op4
 IF "%var%"=="5"  GOTO op5
 IF "%var%"=="6"  GOTO op6
 IF "%var%"=="7"  GOTO op7
+IF "%var%"=="8"  GOTO op8
+IF "%var%"=="c"  GOTO tienda
 IF "%var%"=="0"  GOTO salir
 ECHO.
 
@@ -52,13 +65,14 @@ GOTO start
 :op1
 ECHO.
 ECHO +++= (1) Reiniciar caja =+++
-SET /P store=Escriba el numero de tienda con 4 digitos:
+::ECHO.
+::SET /P store=Escriba el numero de tienda con 4 digitos:
 ECHO.
 SET /P till=Escriba el numero de caja con 2 digitos:
 
 psshutdown \\es-"%store%"TI"%till%" -r -t 1
 
-ECHO Caja reiniciadose.
+ECHO Caja reiniciandose.
 ECHO Volvemos a menu principal.
 ECHO.
 PAUSE
@@ -77,8 +91,8 @@ GOTO op1
 :op2
 ECHO.
 ECHO +++= (2) Reiniciar aplicacion de caja =+++
-SET /P store=Escriba el numero de tienda con 4 digitos:
-ECHO.
+::SET /P store=Escriba el numero de tienda con 4 digitos:
+::ECHO.
 SET /P till=Escriba el numero de caja con 2 digitos:
 ECHO.
 
@@ -90,7 +104,7 @@ PAUSE
 
 psexec \\es-"%store%"TI"%till%" -u wepos -p LIdL123! -i -d c:\gkretail\pos\jstore_ES.cmd 
 ECHO.
-ECHO Aplicacion de caja reinciada.
+ECHO Aplicacion de caja reiniciada.
 ECHO Volvemos a menu principal.
 ECHO.
 PAUSE
@@ -109,8 +123,8 @@ GOTO op2
 :op3
 ECHO.
 ECHO +++= (3) Buscar y eliminar Nullgk_bon =+++
-ECHO.
-SET /P store=Escriba el numero de tienda con 4 digitos:
+::ECHO.
+::SET /P store=Escriba el numero de tienda con 4 digitos:
 ECHO.
 SET /P till=Escriba el numero de caja con 2 digitos:
 
@@ -215,8 +229,8 @@ ECHO.
 	:telefonica
 	ECHO.
 	ECHO += (5.1) Ping Router de Telefonica =+
-	ECHO.
-	SET /P store=Escriba el numero de tienda con 4 digitos:
+	::ECHO.
+	::SET /P store=Escriba el numero de tienda con 4 digitos:
 	ECHO.
 	SET /P n=Escriba el numero de repeticiones del ping:
 	ECHO.
@@ -237,8 +251,8 @@ ECHO.
 	:vpn
 	ECHO.
 	ECHO += (5.2) Ping VPN =+
-	ECHO.
-	SET /P store=Escriba el numero de tienda con 4 digitos:
+	::ECHO.
+	::SET /P store=Escriba el numero de tienda con 4 digitos:
 	ECHO.
 	SET /P n=Escriba el numero de repeticiones del ping:
 	ECHO.
@@ -259,8 +273,8 @@ ECHO.
 	:ap
 	ECHO.
 	ECHO += (5.3) Ping APs =+
-	ECHO.
-	SET /P store=Escriba el numero de tienda con 4 digitos:
+	::ECHO.
+	::SET /P store=Escriba el numero de tienda con 4 digitos:
 	ECHO.
 	SET /P ap=Escriba el numero de punto de acceso con 2 digitos:
 	ECHO.
@@ -283,8 +297,8 @@ ECHO.
 	:caja
 	ECHO.
 	ECHO += (5.4) Ping Caja =+
-	ECHO.
-	SET /P store=Escriba el numero de tienda con 4 digitos:
+	::ECHO.
+	::SET /P store=Escriba el numero de tienda con 4 digitos:
 	ECHO.
 	SET /P till=Escriba el numero de la caja con 2 digitos:
 	ECHO.
@@ -307,8 +321,8 @@ ECHO.
 	:bo
 	ECHO.
 	ECHO += (5.5) Ping Back Office =+
-	ECHO.
-	SET /P store=Escriba el numero de tienda con 4 digitos:
+	::ECHO.
+	::SET /P store=Escriba el numero de tienda con 4 digitos:
 	ECHO.
 	SET /P n=Escriba el numero de repeticiones del ping:
 	ECHO.
@@ -333,8 +347,8 @@ ECHO.
 	:impresora
 	ECHO.
 	ECHO += (5.6) Ping Impresora =+
-	ECHO.
-	SET /P store=Escriba el numero de tienda con 4 digitos:
+	::ECHO.
+	::SET /P store=Escriba el numero de tienda con 4 digitos:
 	ECHO.
 	SET /P n=Escriba el numero de repeticiones del ping:
 	ECHO.
@@ -382,8 +396,8 @@ GOTO op6
 :op7
 ECHO.
 ECHO +++= (7) Reinstalar servicio C3 =+++
-ECHO.
-SET /P store=Escriba el numero de la tienda con 4 digitos:
+::ECHO.
+::SET /P store=Escriba el numero de la tienda con 4 digitos:
 ECHO.
 SET /P till=Escriba el numero de la caja con 2 digitos:
 ECHO.
