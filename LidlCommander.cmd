@@ -14,6 +14,7 @@ cls
 SET /P store=Por favor escriba el numero de tienda con 4 digitos.
 ECHO.
 ECHO Si quiere cambiar la tienda pulse "c" minuscula en el menu principal.
+PAUSE
 GOTO start
 
 :: menu
@@ -29,7 +30,7 @@ ECHO  4 - Reinciar aplicacion de BO [NOT WORKING]
 ECHO  5 - Ping
 ECHO  6 - Reinciar servicio CA SupportBridge
 ECHO  7 - Reinstalar servicio C3
-ECHO  8 - STABLENET Disco E:/ 
+ECHO  8 - STABLENET Disco E:\ 
 ECHO  0 - Salir
 ECHO  c - Cambiar de tienda
 ECHO.
